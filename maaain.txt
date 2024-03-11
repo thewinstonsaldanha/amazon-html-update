@@ -1,0 +1,427 @@
+/**
+ * 
+ */
+/**
+ * 
+ */
+/**
+ * 
+ *//**
+* 
+*/
+var movies = [];
+function addsearchedmovie(data) {
+	var containerDiv = document.getElementById("searchedMovie")
+	console.log(containerDiv);
+	var newDiv = document.createElement("div");
+	newDiv.innerHTML = `
+      <div class="card mb-4 shadow-sm">
+                            <div class="card-body">
+                           
+                            <h5 class="card-title">Movie Id: ${data.movieId}</h5>
+                            <img class="card-img-top" src="${data.movieImage}">
+                                <h5 class="card-title">${data.movieName}</h5>
+                                <p class="card-text font-italic">${data.movieGenre}</p>
+                                <p class="card-text font-italic">${data.movieLanguage}</p>
+                                
+                            </div>
+                        </div>`;
+	containerDiv.appendChild(newDiv);
+}
+
+
+
+function showAllMovies() {
+        	document.getElementById("Home").style.display = "none";
+            document.getElementById("add-movie-form").style.display = "none";
+            document.getElementById("edit-movie-form").style.display = "none";
+            document.getElementById("delete-movie-form").style.display = "none";
+            document.getElementById("view-all-movies").style.display = "block";
+            document.getElementById("signin").style.display="none";
+            document.getElementById("signup").style.display="none";
+
+            
+            fetch("http://localhost:8080/postbook/webapi/moviereview/movies", {
+                method: "GET",
+            })
+            .then((resp) => resp.json())
+            .then((data) => {
+                
+                const allMoviesList = document.getElementById("all-movies-list");
+                allMoviesList.innerHTML = ""; // Clear existing content
+
+                
+                data.forEach((movie) => {
+                    const card = document.createElement("div");
+                    card.classList.add("col-md-4");
+                    card.innerHTML = `
+                    	
+                        <div class="card mb-4 shadow-sm">
+                            <div class="card-body">
+                           
+                            <h5 class="card-title">Movie Id: ${movie.movieId}</h5>
+                            <img class="card-img-top" src="${movie.movieImage}">
+                                <h5 class="card-title">${movie.movieName}</h5>
+                                <p class="card-text font-italic">${movie.movieGenre}</p>
+                                <p class="card-text font-italic">${movie.movieLanguage}</p>
+                               
+                                <button  id="rajeev" type="button" class="btn btn-danger" onclick="deleteHandler(${movie.movieId})" >Delete</button>
+                            </div>
+                            <button  id="rai" class="btn btn-secondary" onclick="updateHandler(${movie.movieId})">Update</button>
+                        </div>
+                      
+                    `;
+                    allMoviesList.appendChild(card);
+                    
+                });
+            })
+            .catch((error) => {
+                console.error("Error:", error);
+                alert("Failed to retrieve movies");
+            });
+        }
+function deleteHandler(id) {
+	document.getElementById("Home").style.display = "none";
+	document.getElementById("add-movie-form").style.display = "none";
+	document.getElementById("edit-movie-form").style.display = "none";
+	document.getElementById("delete-movie-form").style.display = "block";
+	document.getElementById("view-all-movies").style.display = "none";
+	document.getElementById("deleteMovieId").value = id;
+}
+function add() {
+	console.log(document.getElementById("movieImage").value);
+	const movieData = {
+		movieId: document.getElementById("movieId").value,
+		movieName: document.getElementById("movieName").value,
+		movieLanguage: document.getElementById("movieLanguage").value,
+		movieGenre: document.getElementById("movieGenre").value,
+		movieImage: document.getElementById("movieImage").value
+	};
+
+	console.log(movieData);
+	fetch("http://localhost:8080/postbook/webapi/moviereview/movie/add", {
+		method: "POST",
+		headers: {
+			"Content-Type": "application/json",
+		},
+		body: JSON.stringify(movieData),
+	})
+		.then((resp) => {
+			console.log(resp)
+			if (resp.status === 200) {
+
+				showAllMovies()
+				return resp.json();
+			} else if (resp.status === 204) {
+				// No content
+				throw new Error("Failed to add movie");
+			}
+		})
+		.then((data) => {
+			console.log(data);
+			// Add the new movie to the array
+			if (data.queryStatus == true) {
+				movies.push(data);
+				// Optionally update the UI to reflect the added movie
+				alert("Movie added successfully !");
+			}
+			else {
+				alert("Failed to add movie");
+			}
+		})
+		.catch((error) => {
+			console.error("Error:", error);
+			alert("Failed to add movie");
+		});
+}
+
+function editMovie() {
+
+	const movieData = {
+		movieId: document.getElementById("editMovieId").value,
+		movieName: document.getElementById("editMovieName").value,
+		movieLanguage: document.getElementById("editMovieLanguage").value,
+		movieGenre: document.getElementById("editMovieGenre").value,
+		movieImage: document.getElementById("editmovieImage").value
+	};
+	console.log(movieData);
+	fetch("http://localhost:8080/postbook/webapi/moviereview/movie/edit", {
+		method: "PUT",
+		headers: {
+			"Content-Type": "application/json",
+		},
+		body: JSON.stringify(movieData),
+	})
+		.then((resp) => {
+			if (resp.status === 200) {
+				alert("Movie updated successfully !");
+				showAllMovies()
+				return resp.json();
+			} else if (resp.status === 204) {
+				// No content
+				throw new Error("Failed to update movie");
+			}
+		})
+		.then((data) => {
+			console.log(data);
+			// Optionally update the UI to reflect the updated movie
+		})
+		.catch((error) => {
+			console.error("Error:", error);
+			alert("Failed to update movie");
+		});
+}
+
+function deleteMovie() {
+	const movieId = document.getElementById("deleteMovieId").value;
+
+	fetch(`http://localhost:8080/postbook/webapi/moviereview/movie/delete/${movieId}`, {
+		method: "DELETE",
+	})
+		.then((resp) => {
+			if (resp.status === 200) {
+				alert("Movie deleted successfully !");
+				showAllMovies()
+				return resp.json();
+			} else if (resp.status === 204) {
+				// No content
+				throw new Error("Failed to delete movie");
+			}
+		})
+		.then((data) => {
+			console.log(data);
+			// Optionally update the UI to reflect the deleted movie
+		})
+		.catch((error) => {
+			console.error("Error:", error);
+			alert("Failed to delete movie");
+		});
+}
+
+function getMovieByName() {
+	const movieName = document.getElementById("SearchmovieName").value;
+	console.log(movieName);
+	console.log("22222")
+	fetch(`http://localhost:8080/postbook/webapi/moviereview/movie/${movieName}`, {
+		method: "GET",
+	})
+		.then((resp) => resp.json())
+		.then((data) => {
+			console.log(data);
+			// Optionally update the UI to display the list of all movies
+			addsearchedmovie(data);
+
+
+
+		})
+		.catch((error) => {
+			console.error("Error:", error);
+			alert("Failed to retrieve movie");
+		});
+}
+
+
+function getAllMovies() {
+	fetch("http://localhost:8080/postbook/webapi/moviereview/movies", {
+		method: "GET",
+	})
+		.then((resp) => resp.json())
+		.then((data) => {
+			console.log(data);
+
+		})
+		.catch((error) => {
+			console.error("Error:", error);
+			alert("Failed to retrieve movies");
+		});
+}
+
+function showAllMovies() {
+	// Show View All Movies tab and hide others
+	document.getElementById("add-movie-form").style.display = "none";
+	document.getElementById("edit-movie-form").style.display = "none";
+	document.getElementById("delete-movie-form").style.display = "none";
+	document.getElementById("view-all-movies").style.display = "block";
+
+	// Fetch all movies from the backend
+	fetch("http://localhost:8080/postbook/webapi/moviereview/movies", {
+		method: "GET",
+	})
+		.then((resp) => resp.json())
+		.then((data) => {
+			// Update the UI to display the list of all movies
+			const allMoviesList = document.getElementById("all-movies-list");
+			allMoviesList.innerHTML = ""; // Clear existing content
+
+			// Iterate through the fetched movies and create list items
+			data.forEach((movie) => {
+				const listItem = document.createElement("li");
+				listItem.textContent = movie.movieName; // Modify this based on your movie object structure
+				allMoviesList.appendChild(listItem);
+			});
+		})
+		.catch((error) => {
+			console.error("Error:", error);
+			alert("Failed to retrieve movies");
+		});
+}
+
+
+
+
+function updateHandler(id) {
+	console.log("Hello")
+	document.getElementById("Home").style.display = "none";
+	document.getElementById("add-movie-form").style.display = "none";
+	document.getElementById("edit-movie-form").style.display = "block";
+	document.getElementById("delete-movie-form").style.display = "none";
+	document.getElementById("view-all-movies").style.display = "none";
+	document.getElementById("editMovieId").value = id;
+
+	fetch(`http://localhost:8080/postbook/webapi/moviereview/movie/find/${id}`, {
+		method: "GET",
+	})
+		.then((resp) => resp.json())
+		.then((data) => {
+			console.log(data.movieImage);
+			// Optionally update the UI to display the list of all movies
+
+			document.getElementById("editMovieName").value = data.movieName;
+			document.getElementById("editMovieLanguage").value = data.movieLanguage;
+			document.getElementById("editMovieGenre").value = data.movieGenre;
+			document.getElementById("editmovieImage").value = data.movieImage;
+
+
+
+
+		})
+		.catch((error) => {
+			console.error("Error:", error);
+			alert("Failed to retrieve movie");
+		});
+
+
+
+
+}
+
+
+
+
+
+
+
+function signUp() {
+	const userData = {
+		userName: document.getElementById("signUpName").value,
+		userEmail: document.getElementById("signUpEmail").value,
+		userPassword: document.getElementById("signUpPassword").value,
+	}
+	
+	document.getElementById("signUpName").value="";
+	document.getElementById("signUpEmail").value="";
+	document.getElementById("signUpPassword").value="";
+	fetch("http://localhost:8080/postbook/webapi/moviereview/signup", {
+		method: "POST",
+		headers: {
+			"Content-Type": "application/json",
+
+		},
+		body: JSON.stringify(userData),
+	})
+		.then((resp) => {
+			if (resp.status === 200) {
+				alert("User Success")
+				return resp.json();
+			}
+			else if (resp.status === 204) {
+				throw new Error("Invalid")
+			}
+		})
+		.then((data) => 
+		{
+			makebuttonable();
+			makedisabledtoable();
+			showAllMovies()
+			
+			console.log(data)
+			});
+}
+
+function signIn() {
+	const useremailInput = document.getElementById("signInemail");
+	const userpasswordInput = document.getElementById("signInPassword");
+	const userData = {
+		userEmail: useremailInput.value,
+		userPassword: userpasswordInput.value,
+	};
+	useremailInput.value="";
+	userpasswordInput.value="";
+
+	fetch("http://localhost:8080/postbook/webapi/moviereview/signin", {
+		method: "POST",
+		headers: {
+			"Content-Type": "application/json",
+		},
+		body: JSON.stringify(userData),
+
+	})
+		.then((resp) => {
+			if (resp.status === 200) {
+				
+				return resp.json();
+			}
+			else if (resp.status === 204) {
+				throw new Error("Invalid")
+			}
+		})
+		.then((data) => {
+			
+			if(data.queryStatus===false)
+			{
+				alert("Failed Login")
+			}
+			else{
+				alert("Success");
+				showAllMovies()
+				makedisabledtoable();
+				makebuttonable();
+				
+			}
+			console.log(data)
+			
+			});
+
+}
+function makebuttonable()
+{
+	console.log("iiiii")
+	document.getElementById("signinahref").classList.add('disabled');
+	document.getElementById("signupahref").classList.add('disabled');
+}
+function makedisabledtoable()
+{
+	
+	console.log("Hiitted")
+	document.querySelectorAll('.nav-link').forEach(function(item) {
+    item.classList.remove('disabled');
+    
+    
+    
+});
+
+
+}
+
+function logout()
+{
+	document.getElementById("another1").classList.add('disabled');
+	document.getElementById("another2").classList.add('disabled');
+	document.getElementById("another").classList.add('disabled');
+	document.getElementById("another3").classList.add('disabled');
+	document.getElementById("another4").classList.add('disabled');
+	document.getElementById("signinahref").classList.remove('disabled');
+	document.getElementById("signupahref").classList.remove('disabled');
+	showHome()
+	alert("Logged Out")
+}
