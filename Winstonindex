@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Product Admin Panel</title>
+	<!-- Bootstrap CSS -->
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+	<!-- Custom CSS -->
+	<link rel="stylesheet" href="./styles.css">
+</head>
+
+<body>
+	<!-- Tab navigation -->
+	<ul class="nav nav-tabs">
+		<li class="nav-item"><a class="nav-link active" href="#" onclick="showHome()">Home</a></li>
+		<li class="nav-item"><a class="nav-link" href="#" onclick="showAddProductForm()">Add Product</a></li>
+		<li class="nav-item"><a class="nav-link" href="#" onclick="showEditProductForm()">Edit Product</a></li>
+		<li class="nav-item"><a class="nav-link" href="#" onclick="showDeleteProductForm()">Delete Product</a></li>
+		<li class="nav-item"><a class="nav-link" href="#" onclick="showViewAllProducts()">View All Products</a></li>
+		<li class="nav-item"><a class="nav-link" href="#" onclick="showSignInForm()">Sign In</a></li>
+	</ul>
+
+	<!-- Home Tab -->
+	<div id="Home" class="tab-content">
+		<!-- Content for Home tab -->
+		<img class="home-img" src="https://wallpaperaccess.com/full/2593063.jpg">
+		<div class="overlay">
+			<input class="input-group mb-3 input-textbox" id="SearchproductName" type="text"
+				placeholder="Enter Product Name">
+			<button class="btn btn-primary" onclick="getProductByName()">Search</button>
+		</div>
+		<div id="searchedProduct">
+			<h2>Searched Product Here</h2>
+		</div>
+		<footer class="bg-dark text-light py-4">
+			<div class="container">
+				<div class="row">
+					<div class="col-md-4">
+						<h5>About Us</h5>
+						<p>We are a dedicated team of Product enthusiasts providing best quality and insightful Product.
+						</p>
+					</div>
+					<div class="col-md-4">
+						<h5>Quick Links</h5>
+						<ul class="list-unstyled">
+							<li><a href="#">Home</a></li>
+							<li><a href="#">Products</a></li>
+							<li><a href="#">Reviews</a></li>
+							<li><a href="#">Contact Us</a></li>
+						</ul>
+					</div>
+					<div class="col-md-4">
+						<h5>Follow Us</h5>
+						<ul class="list-unstyled">
+							<li><a href="#"><i class="fab fa-facebook-f"></i> Facebook</a></li>
+							<li><a href="#"><i class="fab fa-twitter"></i> Twitter</a></li>
+							<li><a href="#"><i class="fab fa-instagram"></i> Instagram</a></li>
+						</ul>
+					</div>
+				</div>
+				<div class="row mt-3">
+					<div class="col-md-12 text-center">
+						<p>&copy; 2024 E-commerce Website. All Rights Reserved.</p>
+					</div>
+				</div>
+			</div>
+		</footer>
+	</div>
+
+	<!-- Add Product Form -->
+	<div class="container">
+		<div id="add-product-form" class="tab-content" style="display: none;">
+			<h4>Add New Product</h4>
+			<!-- Form content for adding product -->
+		</div>
+	</div>
+
+	<!-- Edit Product Form -->
+	<div class="container">
+		<div id="edit-product-form" class="tab-content" style="display: none;">
+			<h4>Edit Product</h4>
+			<!-- Form content for editing product -->
+		</div>
+	</div>
+
+	<!-- Delete Product Form -->
+	<div class="container">
+		<div id="delete-product-form" class="tab-content" style="display: none;">
+			<h4>Delete Product</h4>
+			<!-- Form content for deleting product -->
+		</div>
+	</div>
+
+	<!-- View All Products Tab -->
+	<div id="view-all-products" class="tab-content" style="display: none;">
+		<h4>All Products</h4>
+		<div class="row" id="all-products-list">
+			<!-- Product list will be populated here dynamically -->
+		</div>
+	</div>
+
+	<!-- Sign In Form -->
+	<form id="adminSignInForm" style="display: none;">
+		<div>
+			<label for="adminEmail">Email:</label>
+			<input type="email" id="adminEmail" name="adminEmail" required>
+		</div>
+		<div>
+			<label for="adminPassword">Password:</label>
+			<input type="password" id="adminPassword" name="adminPassword" required>
+		</div>
+		<div>
+			<button type="button" onclick="signIn()">Sign In</button>
+		</div>
+	</form>
+
+	<!-- Bootstrap JS -->
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+	<!-- jQuery -->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+	<!-- Custom JS -->
+	<script src="main.js"></script>
+	<script>
+		function showHome() {
+			document.getElementById("Home").style.display = "block";
+			document.getElementById("add-product-form").style.display = "none";
+			document.getElementById("edit-product-form").style.display = "none";
+			document.getElementById("delete-product-form").style.display = "none";
+			document.getElementById("view-all-products").style.display = "none";
+		}
+		function showAddproductForm() {
+			document.getElementById("Home").style.display = "none";
+			document.getElementById("add-product-form").style.display = "block";
+			document.getElementById("edit-product-form").style.display = "none";
+			document.getElementById("delete-product-form").style.display = "none";
+			document.getElementById("view-all-products").style.display = "none";
+		}
+
+		function showeditProductForm() {
+			document.getElementById("Home").style.display = "none";
+			document.getElementById("add-product-form").style.display = "none";
+			document.getElementById("edit-product-form").style.display = "block";
+			document.getElementById("delete-product-form").style.display = "none";
+			document.getElementById("view-all-products").style.display = "none";
+		}
+
+		function showDeleteproductForm() {
+			document.getElementById("Home").style.display = "none";
+			document.getElementById("add-product-form").style.display = "none";
+			document.getElementById("edit-product-form").style.display = "none";
+			document.getElementById("delete-product-form").style.display = "block";
+			document.getElementById("view-all-products").style.display = "none";
+		}
+
+
+
+		function showAllProducts() {
+			document.getElementById("Home").style.display = "none";
+			document.getElementById("add-product-form").style.display = "none";
+			document.getElementById("edit-product-form").style.display = "none";
+			document.getElementById("delete-product-form").style.display = "none";
+			document.getElementById("view-all-products").style.display = "block";
+
+
+			fetch("http://localhost:8080/postbook/webapi/products/getAllProducts", {
+				method: "GET",
+			})
+				.then((resp) => resp.json())
+				.then((data) => {
+
+					const allProductsList = document.getElementById("all-products-list");
+					allProductsList.innerHTML = ""; // Clear existing content
+
+
+					data.forEach((product) => {
+						const card = document.createElement("div");
+						card.classList.add("col-md-4");
+						card.innerHTML = `
+                    	
+                        <div class="card mb-4 shadow-sm">
+                            <div class="card-body">
+                           
+                            <h5 class="card-title">product Id: ${product.productId}</h5>
+                            <img class="card-img-top" src="${product.productImage}">
+                                <h5 class="card-title">${product.productName}</h5>
+                                <p class="card-text font-italic">${product.productGenre}</p>
+                                <p class="card-text font-italic">${product.productLanguage}</p>
+                               
+                                <button type="button" class="btn btn-danger" onclick="deleteHandler(${product.productId})" >Delete</button>
+                            </div>
+                            <button  id="updatebtn" class="btn btn-secondary" onclick="updateHandler(${product.productId})">Update</button>
+                        </div>
+                      
+                    `;
+						allProductsList.appendChild(card);
+
+					});
+				})
+				.catch((error) => {
+					console.error("Error:", error);
+					alert("Failed to retrieve products");
+				});
+		}
+	</script>
+</body>
+
+</html>
