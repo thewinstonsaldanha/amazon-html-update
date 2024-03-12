@@ -1,0 +1,583 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Product Admin Panel</title>
+	<!-- Bootstrap CSS -->
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+	<!-- Custom CSS -->
+	<link rel="stylesheet" href="./styles.css">
+</head>
+
+<body>
+	<!-- Tab navigation -->
+	<!-- Tab navigation -->
+	<ul class="nav nav-tabs  ">
+		<li class="nav-item"><a class="nav-link active" href="#Home" onclick="showHome()">Home</a></li>
+		<li class="nav-item"><a class="nav-link" href="#add-product-form" onclick="addProduct()">Add Product</a>
+		</li>
+		<li class="nav-item"><a class="nav-link" href="#edit-product-form" onclick="showEditProductForm()">Edit
+				Product</a></li>
+		<li class="nav-item"><a class="nav-link" href="#delete-product-form" onclick="showDeleteProductForm()">Delete
+				Product</a></li>
+		<li class="nav-item"><a class="nav-link" href="#view-all-products" onclick="showAllProducts()">View All
+				Products</a></li>
+		<li class="nav-item"><a class="nav-link" href="#" onclick="showSignInForm()">Sign In</a></li>
+	</ul>
+
+
+
+	<div id="Home" class="tab-content">
+		<img class="home-img" src="https://wallpaperaccess.com/full/2593063.jpg">
+
+		<div class="overlay ">
+			<input class="input-group mb-3 input-textbox " id="SearchproductName" type="text"
+				placeholder="Enter Product Name">
+			<button class="btn btn-primary" onclick="getProductByName()">Search</button>
+		</div>
+		<div id="searchedProduct">
+			<h2>Searched Product Here</h2>
+		</div>
+
+		<footer class="bg-dark text-light py-4">
+			<div class="container">
+				<div class="row">
+					<div class="col-md-4">
+						<h5>About Us</h5>
+						<p>We are a dedicated team of Product enthusiasts providing best quality and insightful Product.
+						</p>
+					</div>
+					<div class="col-md-4">
+						<h5>Quick Links</h5>
+						<ul class="list-unstyled">
+							<li><a href="#">Home</a></li>
+							<li><a href="#">Products</a></li>
+							<li><a href="#">Reviews</a></li>
+							<li><a href="#">Contact Us</a></li>
+						</ul>
+					</div>
+					<div class="col-md-4">
+						<h5>Follow Us</h5>
+						<ul class="list-unstyled">
+							<li><a href="#"><i class="fab fa-facebook-f"></i> Facebook</a></li>
+							<li><a href="#"><i class="fab fa-twitter"></i> Twitter</a></li>
+							<li><a href="#"><i class="fab fa-instagram"></i> Instagram</a></li>
+						</ul>
+					</div>
+
+					<div class="row mt-3">
+						<div class="col-md-12 text-center">
+							<p>&copy; 2024 E-commerce Website. All Rights Reserved.</p>
+						</div>
+					</div>
+				</div>
+		</footer>
+	</div>
+
+	
+	<!-- Add Product Form -->
+	<div class="container">
+		<div id="add-product-form" class="tab-content" style="display: none;">
+			<h4>Add New Product</h4>
+			<form id="addProductForm">
+
+				<div class="mb-3">
+					<label for="productName">Product Name</label> <input type="text" class="form-control"
+						id="productName" required>
+				</div>
+				<div class="mb-3">
+					<label for="productPrice">Product Price</label> <input type="text" class="form-control"
+						id="productPrice" required>
+				</div>
+				<div class="mb-3">
+					<label for="productDesc">Product Description</label> <input type="text" class="form-control"
+						id="productDesc" required>
+				</div>
+				<div class="mb-3">
+					<label for="categoryId">Category Id</label> <input type="text" class="form-control" id="categoryId"
+						required>
+				</div>
+				<div class="mb-3">
+					<label for="productImage">Product Image</label> <input type="text" class="form-control"
+						id="productImage" required>
+				</div>
+				<button type="button" class="btn btn-primary" onclick="addProduct()">Add
+					Product</button>
+			</form>
+		</div>
+	</div>
+
+
+	<!-- Edit Product Form -->
+	<div class="container">
+		<div id="edit-product-form" class="tab-content" style="display: none;">
+			<h4>Edit Product</h4>
+			<form id="editProductForm">
+				<div class="mb-3">
+					<label for="editProductId">Product ID</label> <input type="text" class="form-control"
+						id="editProductId" required>
+				</div>
+				<div class="mb-3">
+					<label for="editProductName">Product Name</label> <input type="text" class="form-control"
+						id="editProductName" required>
+				</div>
+				<div class="mb-3">
+					<label for="editProductPrice">Product Price</label> <input type="text" class="form-control"
+						id="editProductPrice" required>
+				</div>
+				<div class="mb-3">
+					<label for="editProductDesc">Product Description</label> <input type="text" class="form-control"
+						id="editProductDesc" required>
+				</div>
+				<div class="mb-3">
+					<label for="categoryId">Category Id</label> <input type="text" class="form-control" id="categoryId"
+						required>
+				</div>
+
+				<div class="mb-3">
+					<label for="productImage">Product Image</label> <input type="text" class="form-control"
+						id="productImage" required>
+				</div>
+				<button type="button" class="btn btn-primary" onclick="editProduct()">Save
+					Changes</button>
+			</form>
+		</div>
+	</div>
+
+	<!-- Delete Product Form -->
+	<div class="container">
+		<div id="delete-product-form" class="tab-content" style="display: none;">
+			<h4>Delete Product</h4>
+			<form id="deleteProductForm">
+				<div class="mb-3">
+					<label for="deleteProductId">Product ID</label> <input type="text" class="form-control"
+						id="deleteProductId" required>
+				</div>
+				<button type="button" class="btn btn-danger" onclick="deleteProduct()">Delete
+					Product</button>
+			</form>
+		</div>
+	</div>
+
+
+	<!-- View All Products Tab -->
+	<div id="view-all-products" class="tab-content" style="display: none;">
+		<h4>All Products</h4>
+		<div class="row" id="all-products-list">
+			<!-- Movie list will be populated here dynamically -->
+		</div>
+	</div>
+	</div>
+
+	<!-- Bootstrap JS -->
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+	<!-- jQuery -->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+	<!-- Custom JS -->
+	<script src="main.js"></script>
+
+	<script>
+		// JavaScript functions for showing/hiding forms
+
+		function showHome() {
+			document.getElementById("Home").style.display = "block";
+			document.getElementById("add-product-form").style.display = "none";
+			document.getElementById("edit-product-form").style.display = "none";
+			document.getElementById("delete-product-form").style.display = "none";
+			document.getElementById("view-all-products").style.display = "none";
+		}
+		function showAddMovieForm() {
+			document.getElementById("Home").style.display = "none";
+			document.getElementById("add-product-form").style.display = "block";
+			document.getElementById("edit-product-form").style.display = "none";
+			document.getElementById("delete-product-form").style.display = "none";
+			document.getElementById("view-all-products").style.display = "none";
+		}
+
+		function showEditMovieForm() {
+			document.getElementById("Home").style.display = "none";
+			document.getElementById("add-product-form").style.display = "none";
+			document.getElementById("edit-product-form").style.display = "block";
+			document.getElementById("delete-product-form").style.display = "none";
+			document.getElementById("view-all-products").style.display = "none";
+		}
+
+		function showDeleteMovieForm() {
+			document.getElementById("Home").style.display = "none";
+			document.getElementById("add-product-form").style.display = "none";
+			document.getElementById("edit-product-form").style.display = "none";
+			document.getElementById("delete-product-form").style.display = "block";
+			document.getElementById("view-all-products").style.display = "none";
+		}
+
+
+
+		function showAllProducts() {
+			document.getElementById("Home").style.display = "none";
+			document.getElementById("add-product-form").style.display = "none";
+			document.getElementById("edit-product-form").style.display = "none";
+			document.getElementById("delete-product-form").style.display = "none";
+			document.getElementById("view-all-products").style.display = "block";
+
+
+			fetch("http://localhost:8080/postbook/webapi/products/getAllProducts", {
+				method: "GET",
+			})
+				.then((resp) => resp.json())
+				.then((data) => {
+					const allProductsList = document.getElementById("all-products-list");
+					allProductsList.innerHTML = "";
+
+					data.forEach((product) => {
+						const card = document.createElement("div");
+						card.classList.add("col-md-4");
+						card.innerHTML = `
+            <div class="card mb-4 shadow-sm">
+                <div class="card-body">
+                    <h5 class="card-title">Product Id: ${product.productId}</h5> 
+                    <img class="card-img-top" src="${product.productImage}">
+                    <h5 class="card-title">${product.productName}</h5> 
+                    <p class="card-text font-italic">${product.productDescription}</p> 
+                    <p class="card-text font-italic">Price: ${product.productPrice}</p> 
+                    <button type="button" class="btn btn-danger" onclick="deleteHandler(${product.productId})">Delete</button> 
+                </div>
+                <button id="updatebtn" class="btn btn-secondary" onclick="updateHandler(${product.productId})">Update</button> 
+            </div>
+        `;
+						allProductsList.appendChild(card);
+					});
+				})
+				.catch((error) => {
+					console.error("Error:", error);
+					alert("Failed to retrieve products");
+				});
+
+		}
+	</script>
+
+	<script src="./main.js"></script>
+
+</body>
+
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+var products = [];
+
+function addSearchedProduct(data) {
+  var containerDiv = document.getElementById("searchedProduct");
+  var newDiv = document.createElement("div");
+  newDiv.innerHTML = `
+        <div class="card mb-4 shadow-sm">
+            <div class="card-body">
+                <h5 class="card-title">Product Id: ${data.productId}</h5>
+                <img class="card-img-top" src="${data.productImage}">
+                <h5 class="card-title">${data.productName}</h5>
+                <p class="card-text font-italic">${data.productDescription}</p>
+                <p class="card-text font-italic">Price: ${data.productPrice}</p>
+                <button type="button" class="btn btn-primary mr-2"  onclick="updateHandler(${data.productId})" >Update</button>
+                <button type="button" class="btn btn-danger" onclick="deleteHandler(${data.productId})" >Delete</button>
+            </div>
+        </div>`;
+  containerDiv.appendChild(newDiv);
+}
+
+function deleteHandler(id) {
+  document.getElementById("Home").style.display = "none";
+  document.getElementById("add-product-form").style.display = "none";
+  document.getElementById("edit-product-form").style.display = "none";
+  document.getElementById("delete-product-form").style.display = "block";
+  document.getElementById("view-all-product").style.display = "none";
+  document.getElementById("deleteProductId").value = id;
+}
+function addProduct() {
+  const productData = {
+    productName: document.getElementById("productName").value,
+    productPrice: document.getElementById("productPrice").value,
+    productDescription: document.getElementById("productDesc").value,
+    categoryid: document.getElementById("categoryid").value,
+    productImage: document.getElementById("productImage").value,
+  };
+  console.log(productData);
+
+  fetch("http://localhost:8080/postbook/webapi/amazon/products/add", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(productData),
+  })
+    .then((resp) => {
+      if (resp.ok) {
+        console.log(resp);
+        return resp.json();
+      } else {
+        console.log("Failed to add product1");
+        throw new Error("Failed to add product1");
+      }
+    })
+    .then((data) => {
+      console.log(data);
+      if (data.queryStatus == true) {
+        products.push(data);
+        alert("Product added successfully !");
+      } else {
+        alert("Failed to add product2");
+      }
+    })
+    .catch((error) => {
+      console.error("Error:", error);
+      alert("Failed to add product3");
+    });
+}
+
+function editProduct() {
+  const productData = {
+    productId: document.getElementById("editProductId").value,
+    productName: document.getElementById("editProductName").value,
+    productDescription: document.getElementById("editProductDesc").value,
+    productPrice: document.getElementById("editProductPrice").value,
+    productImage: document.getElementById("editProductImage").value,
+  };
+
+  fetch(
+    "http://localhost:8080/postbook/webapi/amazon/products/updateProducts",
+    {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(productData),
+    }
+  )
+    .then((resp) => {
+      if (resp.status === 200) {
+        alert("Product updated successfully !");
+        showAllProducts();
+        return resp.json();
+      } else if (resp.status === 204) {
+        throw new Error("Failed to update product");
+      }
+    })
+    .then((data) => {
+      console.log(data);
+    })
+    .catch((error) => {
+      console.error("Error:", error);
+      alert("Failed to update product");
+    });
+}
+
+function deleteProduct() {
+  const productId = document.getElementById("deleteProductId").value;
+
+  fetch(
+    `http://localhost:8080/postbook/webapi/amazon/products/delete/${productId}`,
+    {
+      method: "DELETE",
+    }
+  )
+    .then((resp) => {
+      if (resp.status === 200) {
+        alert("Product deleted successfully !");
+        showAllProducts();
+        return resp.json();
+      } else if (resp.status === 204) {
+        throw new Error("Failed to delete product");
+      }
+    })
+    .then((data) => {
+      console.log(data);
+    })
+    .catch((error) => {
+      console.error("Error:", error);
+      alert("Failed to delete product");
+    });
+}
+
+function getProductByName() {
+  const productName = document.getElementById("SearchproductName").value;
+
+  fetch(
+    `http://localhost:8080/postbook/webapi/amazon/products/${productName}`,
+    {
+      method: "GET",
+    }
+  )
+    .then((resp) => resp.json())
+    .then((data) => {
+      addSearchedProduct(data);
+    })
+    .catch((error) => {
+      console.error("Error:", error);
+      alert("Failed to retrieve product");
+    });
+}
+
+function getAllProducts() {
+  fetch("http://localhost:8080/postbook/webapi/amazon/products", {
+    method: "GET",
+  })
+    .then((resp) => resp.json())
+    .then((data) => {
+      console.log(data);
+    })
+    .catch((error) => {
+      console.error("Error:", error);
+      alert("Failed to retrieve products");
+    });
+}
+
+function showAllProducts() {
+  document.getElementById("add-product-form").style.display = "none";
+  document.getElementById("edit-product-form").style.display = "none";
+  document.getElementById("delete-product-form").style.display = "none";
+  document.getElementById("view-all-products").style.display = "block";
+
+  fetch("http://localhost:8080/postbook/webapi/amazon/products", {
+    method: "GET",
+  })
+    .then((resp) => resp.json())
+    .then((data) => {
+      const allProductsList = document.getElementById("all-products-list");
+      allProductsList.innerHTML = "";
+
+      data.forEach((product) => {
+        const listItem = document.createElement("li");
+        listItem.textContent = product.productName;
+        allProductsList.appendChild(listItem);
+      });
+    })
+    .catch((error) => {
+      console.error("Error:", error);
+      alert("Failed to retrieve products");
+    });
+}
+
+function updateHandler(id) {
+  document.getElementById("Home").style.display = "none";
+  document.getElementById("add-product-form").style.display = "none";
+  document.getElementById("edit-product-form").style.display = "block";
+  document.getElementById("delete-product-form").style.display = "none";
+  document.getElementById("view-all-products").style.display = "none";
+  document.getElementById("editProductId").value = id;
+
+  fetch(`http://localhost:8080/postbook/webapi/amazon/products/find/${id}`, {
+    method: "GET",
+  })
+    .then((resp) => resp.json())
+    .then((data) => {
+      document.getElementById("editProductName").value = data.productName;
+      document.getElementById("editProductDesc").value =
+        data.productDescription;
+      document.getElementById("editProductPrice").value = data.productPrice;
+      document.getElementById("editProductImage").value = data.productImage;
+    })
+    .catch((error) => {
+      console.error("Error:", error);
+      alert("Failed to retrieve product");
+    });
+}
+
+function signIn() {
+  document.getElementById("Home").style.display = "none";
+  document.getElementById("add-product-form").style.display = "none";
+  document.getElementById("edit-product-form").style.display = "none";
+  document.getElementById("delete-product-form").style.display = "none";
+  document.getElementById("view-all-products").style.display = "none";
+  document.getElementById("sign-in").style.display = "block";
+
+  const userEmailInput = document.getElementById("signInEmail");
+  const userPasswordInput = document.getElementById("signInPassword");
+  const userData = {
+    userEmail: userEmailInput.value,
+    userPassword: userPasswordInput.value,
+  };
+  userEmailInput.value = "";
+  userPasswordInput.value = "";
+  // console.log(userName);
+
+  fetch("http://localhost:8080/postbook/webapi/amazon/admin/login", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(userData),
+  })
+    .then((resp) => {
+      if (resp.status === 200) {
+        // Successful login
+        console.log("success");
+        alert("Logged In Successfully!");
+        document.getElementById("feed-tab").disabled = false;
+        document.getElementById("profile-tab").disabled = false;
+        document.getElementById("my-tweets-tab").disabled = false;
+        document.getElementById("sign-in-tab").hidden = true;
+        document.getElementById("sign-up-tab").hidden = true;
+        document.getElementById("logout-tab").hidden = false;
+        // getTweets();
+        const feedTabButton = document.getElementById("feed-tab");
+        feedTabButton.click();
+        console.log(userEmailInput.value);
+
+        return resp.json();
+      } else if (resp.status === 204) {
+        // No content
+        throw new Error("Wrong email or password");
+      }
+    })
+    .then((data) => {
+      user = data;
+      console.log(user);
+    })
+    .catch((error) => {
+      console.error("Error:", error);
+      alert("Email Id and Password is Wrong !");
+    });
+}
+
+function signUp() {
+  const userData = {
+    userName: document.getElementById("signUpName").value,
+    userEmail: document.getElementById("signUpEmail").value,
+    userPassword: document.getElementById("signUpPassword").value,
+  };
+  //console.log(userName);
+  document.getElementById("signUpEmail").value = "";
+  document.getElementById("signUpName").value = "";
+  document.getElementById("signUpPassword").value = "";
+
+  fetch("http://localhost:8080/postbook/webapi/twitter/users/add", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(userData),
+  })
+    .then((resp) => {
+      if (resp.status === 200) {
+        alert("User Register Successfully !");
+        return resp.json();
+      } else if (resp.status === 204) {
+        // No content
+        throw new Error("Wrong email or password");
+      }
+    })
+    .then((data) => console.log(data));
+}
