@@ -15,21 +15,21 @@
 	<!-- Tab navigation -->
 	<!-- Tab navigation -->
 	<ul class="nav nav-tabs">
-		<li class="nav-item"><a class="nav-link active" href="#Home" onclick="showHome()">Home</a></li>
-		<li class="nav-item"><a class="nav-link" href="#add-product-form" onclick="showAddProductForm()">Add Product</a>
+		<li class="nav-item"><a class="nav-link active" id="homeid" href="#Home" onclick="showHome()">Home</a></li>
+		<li class="nav-item"><a class="nav-link disabled" id="addid" href="#add-product-form" onclick="showAddProductForm()">Add Product</a>
 		</li>
-		<li class="nav-item"><a class="nav-link" href="#edit-product-form" onclick="showEditProductForm()">Edit
+		<li class="nav-item"><a class="nav-link disabled" id="editid" href="#edit-product-form" onclick="showEditProductForm()">Edit
 				Product</a></li>
-		<li class="nav-item"><a class="nav-link" href="#delete-product-form" onclick="showDeleteProductForm()">Delete
+		<li class="nav-item"><a class="nav-link disabled" id="deleteid" href="#delete-product-form" onclick="showDeleteProductForm()">Delete
 				Product</a></li>
-		<li class="nav-item"><a class="nav-link" href="#view-all-products" onclick="showAllProducts()">View All
+		<li class="nav-item"><a class="nav-link disabled" id="showallid" href="#view-all-products" onclick="showAllProducts()">View All
 				Products</a></li>
-		<li class="nav-item"><a class="nav-link" href="#" onclick="showSignInForm()">Sign In</a></li>
-		<li class="nav-item"><a class="nav-link" href="#" onclick="showSignUpForm()">Sign Up</a></li>
+		<li class="nav-item"><a class="nav-link" href="#sign-in-form" onclick="showSignInForm()">Sign In</a></li>
+		<li class="nav-item"><a class="nav-link" href="#sign-up-form" onclick="showSignUpForm()">Sign Up</a></li>
 	</ul>
 
 
-
+<div class="container">
 	<div id="Home" class="tab-content">
 		<img class="home-img" src="https://wallpaperaccess.com/full/2593063.jpg">
 
@@ -75,6 +75,7 @@
 					</div>
 				</div>
 		</footer>
+	</div>
 	</div>
 
 
@@ -168,30 +169,35 @@
 
 
 	<!-- View All Products Tab -->
+	<div class="container">
 	<div id="view-all-products" class="tab-content" style="display: none;">
 		<h4>All Products</h4>
 		<div class="row" id="all-products-list">
 			<!-- Movie list will be populated here dynamically -->
 		</div>
 	</div>
+	</div>
 
 	<!-- Sign In Form -->
+	<div class="container">
 	<div id="sign-in-form" class="tab-content" style="display: none;">
 		<h4>Sign In</h4>
 		<form id="signInForm">
 			<div class="mb-3">
 				<label for="email">Email</label>
-				<input type="email" class="form-control" id="email" required>
+				<input type="email" class="form-control" id="signInEmail" required>
 			</div>
 			<div class="mb-3">
 				<label for="password">Password</label>
-				<input type="password" class="form-control" id="password" required>
+				<input type="password" class="form-control" id="signInPassword" required>
 			</div>
-			<button type="button" class="btn btn-primary" onclick="signIn()">Sign In</button>
+			<button type="button" class="btn btn-primary" onclick="addsignin()">Sign In</button>
 		</form>
+	</div>
 	</div>
 
 	<!-- Sign Up Form -->
+	<div class="container">
 	<div id="sign-up-form" class="tab-content" style="display: none;">
 		<h4>Sign Up</h4>
 		<form id="signUpForm">
@@ -210,7 +216,7 @@
 			<button type="button" class="btn btn-primary" onclick="signUp()">Sign Up</button>
 		</form>
 	</div>
-
+</div>
 
 
 
@@ -221,7 +227,7 @@
 	<!-- jQuery -->
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 	<!-- Custom JS -->
-	<script src="main.js"></script>
+	<script src="Logic.js"></script>
 
 	<script>
 		// JavaScript functions for showing/hiding forms
@@ -232,6 +238,8 @@
 			document.getElementById("edit-product-form").style.display = "none";
 			document.getElementById("delete-product-form").style.display = "none";
 			document.getElementById("view-all-products").style.display = "none";
+			document.getElementById("sign-up-form").style.display = "none";
+			document.getElementById("sign-in-form").style.display = "none";
 		}
 		function showAddProductForm() {
 			document.getElementById("Home").style.display = "none";
@@ -239,6 +247,8 @@
 			document.getElementById("edit-product-form").style.display = "none";
 			document.getElementById("delete-product-form").style.display = "none";
 			document.getElementById("view-all-products").style.display = "none";
+			document.getElementById("sign-up-form").style.display = "none";
+			document.getElementById("sign-in-form").style.display = "none";
 		}
 
 		function showEditProductForm() {
@@ -247,6 +257,8 @@
 			document.getElementById("edit-product-form").style.display = "block";
 			document.getElementById("delete-product-form").style.display = "none";
 			document.getElementById("view-all-products").style.display = "none";
+			document.getElementById("sign-up-form").style.display = "none";
+			document.getElementById("sign-in-form").style.display = "none";
 		}
 
 		function showDeleteProductForm() {
@@ -255,19 +267,24 @@
 			document.getElementById("edit-product-form").style.display = "none";
 			document.getElementById("delete-product-form").style.display = "block";
 			document.getElementById("view-all-products").style.display = "none";
+			document.getElementById("sign-up-form").style.display = "none";
+			document.getElementById("sign-in-form").style.display = "none";
 		}
 
 
 
 		function showAllProducts() {
+			console.log("chalaaaa");
 			document.getElementById("Home").style.display = "none";
 			document.getElementById("add-product-form").style.display = "none";
 			document.getElementById("edit-product-form").style.display = "none";
 			document.getElementById("delete-product-form").style.display = "none";
 			document.getElementById("view-all-products").style.display = "block";
+			document.getElementById("sign-up-form").style.display = "none";
+			document.getElementById("sign-in-form").style.display = "none";
 
 
-			fetch("http://localhost:8080/postbook/webapi/products/getAllProducts", {
+			fetch("http://localhost:8080/postbook/webapi/amazon/products/getAllProducts", {
 				method: "GET",
 			})
 				.then((resp) => resp.json())
@@ -281,11 +298,11 @@
 						card.innerHTML = `
             <div class="card mb-4 shadow-sm">
                 <div class="card-body">
-                    <h5 class="card-title">Product Id: ${product.productId}</h5> 
-                    <img class="card-img-top" src="${product.productImage}">
-                    <h5 class="card-title">${product.productName}</h5> 
-                    <p class="card-text font-italic">${product.productDescription}</p> 
-                    <p class="card-text font-italic">Price: ${product.productPrice}</p> 
+                    <h5 class="card-title">Product Id: ${product.productid}</h5> 
+                    <img class="card-img-top" src="${product.productimage}">
+                    <h5 class="card-title">${product.productname}</h5> 
+                    <p class="card-text font-italic">${product.productdescription}</p> 
+                    <p class="card-text font-italic">Price: ${product.productprice}</p> 
                     <button type="button" class="btn btn-danger" onclick="deleteHandler(${product.productId})">Delete</button> 
                 </div>
                 <button id="updatebtn" class="btn btn-secondary" onclick="updateHandler(${product.productId})">Update</button> 
@@ -312,6 +329,7 @@
 
 			// Show the sign-in form
 			document.getElementById("sign-in-form").style.display = "block";
+			document.getElementById("sign-up-form").style.display = "none";
 		}
 
 
@@ -325,16 +343,25 @@
 
 			// Show the sign-up form
 			document.getElementById("sign-up-form").style.display = "block";
+			document.getElementById("sign-in-form").style.display = "none";
 		}
 
 
 	</script>
 
-	<script src="./main.js"></script>
+	<script src="./Logic.js"></script>
 
 </body>
 
 </html>
+
+
+
+
+
+
+
+
 
 
 
@@ -432,10 +459,10 @@ function editProduct() {
 }
 
 function deleteProduct() {
-  const productId = document.getElementById("deleteProductId").value;
+  const pid = document.getElementById("deleteProductId").value;
 
   fetch(
-    `http://localhost:8080/postbook/webapi/amazon/products/delete/${productId}`,
+    `http://localhost:8080/postbook/webapi/amazon/products/deleteProducts/${pid}`,
     {
       method: "DELETE",
     }
@@ -443,7 +470,7 @@ function deleteProduct() {
     .then((resp) => {
       if (resp.status === 200) {
         alert("Product deleted successfully!");
-        showAllProducts(); // Refresh product list
+        shoallproduct(); // Refresh product list
         return resp.json();
       } else if (resp.status === 204) {
         throw new Error("Failed to delete product");
@@ -458,59 +485,37 @@ function deleteProduct() {
     });
 }
 
-function showAllProducts() {
+
+function dhandler( id) {
+  document.getElementById("Home").style.display = "none";
   document.getElementById("add-product-form").style.display = "none";
   document.getElementById("edit-product-form").style.display = "none";
-  document.getElementById("delete-product-form").style.display = "none";
-  document.getElementById("view-all-products").style.display = "block";
-
-  fetch("http://localhost:8080/postbook/webapi/amazon/products", {
-    method: "GET",
-  })
-    .then((resp) => {
-      if (resp.ok) {
-        return resp.json();
-      } else {
-        throw new Error("Failed to retrieve products");
-      }
-    })
-    .then((data) => {
-      const allProductsList = document.getElementById("all-products-list");
-      allProductsList.innerHTML = "";
-
-      data.forEach((product) => {
-        const listItem = document.createElement("li");
-        listItem.textContent = product.productName;
-        allProductsList.appendChild(listItem);
-      });
-    })
-    .catch((error) => {
-      console.error("Error:", error);
-      alert("Failed to retrieve products");
-    });
+  document.getElementById("delete-product-form").style.display = "block";
+  document.getElementById("view-all-products").style.display = "none";
+  document.getElementById("sign-up-form").style.display = "none";
+			document.getElementById("sign-in-form").style.display = "none";
+  document.getElementById("deleteProductId").value =id;
 }
 
 
 
-
-
-function signIn() {
+function addsignin(){
   document.getElementById("Home").style.display = "none";
   document.getElementById("add-product-form").style.display = "none";
   document.getElementById("edit-product-form").style.display = "none";
   document.getElementById("delete-product-form").style.display = "none";
   document.getElementById("view-all-products").style.display = "none";
-  document.getElementById("sign-in").style.display = "block";
+  document.getElementById("sign-in-form").style.display = "block";
 
   const userEmailInput = document.getElementById("signInEmail");
   const userPasswordInput = document.getElementById("signInPassword");
   const userData = {
-    userEmail: userEmailInput.value,
-    userPassword: userPasswordInput.value,
+    admin_email: userEmailInput.value,
+    admin_password: userPasswordInput.value,
   };
   userEmailInput.value = "";
   userPasswordInput.value = "";
-  // console.log(userName);
+  console.log(userData);
 
   fetch("http://localhost:8080/postbook/webapi/amazon/admin/login", {
     method: "POST",
@@ -524,20 +529,18 @@ function signIn() {
         // Successful login
         console.log("success");
         alert("Logged In Successfully!");
-        document.getElementById("feed-tab").disabled = false;
-        document.getElementById("profile-tab").disabled = false;
-        document.getElementById("my-tweets-tab").disabled = false;
-        document.getElementById("sign-in-tab").hidden = true;
-        document.getElementById("sign-up-tab").hidden = true;
-        document.getElementById("logout-tab").hidden = false;
+        document.getElementById("addid").classList.remove("disabled")
+        document.getElementById("editid").classList.remove("disabled")
+        document.getElementById("deleteid").classList.remove("disabled")
+        document.getElementById("showallid").classList.remove("disabled")
+    
         // getTweets();
-        const feedTabButton = document.getElementById("feed-tab");
-        feedTabButton.click();
-        console.log(userEmailInput.value);
+  
+        
 
         return resp.json();
       } else if (resp.status === 204) {
-        // No content
+		  console.log(resp.status);
         throw new Error("Wrong email or password");
       }
     })
@@ -562,7 +565,7 @@ function signUp() {
   document.getElementById("signUpName").value = "";
   document.getElementById("signUpPassword").value = "";
 
-  fetch("http://localhost:8080/postbook/webapi/twitter/users/add", {
+  fetch("http://localhost:8080/postbook/webapi/amazon/admin/add", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
